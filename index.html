@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Who's or Whose Game</title>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: rgb(71, 21, 21);;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+      padding: 20px;
+    }
+
+    /* Game Container */
+    #container {
+      background: #ebc580; /* Light brown */
+      color: rgb(71, 21, 21);; /* Dark brown */
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+      padding: 30px 40px;
+      max-width: 600px;
+      width: 100%;
+    }
+
+    /* Title and Instructions */
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: rgb(71, 21, 21);; /* Dark brown */
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    /* Questions */
+    .question {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    .question label {
+      font-size: 1rem;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    select {
+      padding: 8px 12px;
+      font-size: 1rem;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      width: 100%;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    select:hover {
+      border-color: brown;
+    }
+
+    /* Submit Button */
+    button {
+      background: rgb(71, 21, 21);
+      color: #f5deb3; /* Light brown */
+      border: none;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: rgb(71, 21, 21);3; /* Slightly darker brown */
+    }
+
+    /* Result Message */
+    .result {
+      margin-top: 20px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: rgb(71, 21, 21);;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <h1>Who's or Whose Game</h1>
+    <p>Complete the sentences with <strong>who’s</strong> or <strong>whose</strong> </p>
+
+    <form id="quiz">
+      <div class="question">
+        <label>______ the potter creating that beautiful vase?</label>
+        <select id="q1">
+          <option value="">Select an answer</option>
+          <option value="who's">Who’s</option>
+          <option value="whose">Whose</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>______ wheel is this in the corner of the studio?</label>
+        <select id="q2">
+          <option value="">Select an answer</option>
+          <option value="who's">Who’s</option>
+          <option value="whose">Whose</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>The artist ______ known for making intricate bowls is very skilled.</label>
+        <select id="q3">
+          <option value="">Select an answer</option>
+          <option value="who's">Who’s</option>
+          <option value="whose">Whose</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>______ already finished glazing their pottery?</label>
+        <select id="q4">
+          <option value="">Select an answer</option>
+          <option value="who's">Who’s</option>
+          <option value="whose">Whose</option>
+        </select>
+      </div>
+
+      <div class="question">
+        <label>I met the potter ______ tools were handmade from bamboo.</label>
+        <select id="q5">
+          <option value="">Select an answer</option>
+          <option value="who's">Who’s</option>
+          <option value="whose">Whose</option>
+        </select>
+      </div>
+
+      <button type="button" onclick="checkAnswers()">Submit</button>
+    </form>
+
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function checkAnswers() {
+      const answers = {
+        q1: "who's",
+        q2: "whose",
+        q3: "who's",
+        q4: "who's",
+        q5: "whose"
+      };
+
+      let score = 0;
+      for (let [key, correctAnswer] of Object.entries(answers)) {
+        const userAnswer = document.getElementById(key).value;
+        if (userAnswer === correctAnswer) {
+          score++;
+        }
+      }
+
+      const result = document.getElementById("result");
+      result.textContent = `You scored ${score} out of 5!`;
+    }
+  </script>
+</body>
+</html>
