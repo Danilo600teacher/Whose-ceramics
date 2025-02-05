@@ -3,180 +3,350 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Who's or Whose Game</title>
+  <title>Pottery Grammar Challenge</title>
   <style>
-    /* General Reset */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    /* Body Styles */
     body {
       font-family: 'Arial', sans-serif;
-      background: rgb(71, 21, 21);;
-      color: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       min-height: 100vh;
-      text-align: center;
       padding: 20px;
-    }
-
-    /* Game Container */
-    #container {
-      background: #ebc580; /* Light brown */
-      color: rgb(71, 21, 21);; /* Dark brown */
-      border-radius: 15px;
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-      padding: 30px 40px;
-      max-width: 600px;
-      width: 100%;
-    }
-
-    /* Title and Instructions */
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: rgb(71, 21, 21);; /* Dark brown */
-    }
-
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-    }
-
-    /* Questions */
-    .question {
-      margin-bottom: 20px;
-      text-align: left;
-    }
-
-    .question label {
-      font-size: 1rem;
-      margin-bottom: 8px;
-      display: block;
-    }
-
-    select {
-      padding: 8px 12px;
-      font-size: 1rem;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      width: 100%;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    select:hover {
-      border-color: brown;
-    }
-
-    /* Submit Button */
-    button {
       background: rgb(71, 21, 21);
-      color: #f5deb3; /* Light brown */
+    }
+
+    .court {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ebc580;
+      border-radius: 20px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      position: relative;
+      border: 8px solid rgb(71, 21, 21);
+    }
+
+    .scoreboard {
+      background: rgb(71, 21, 21);
+      color: #ebc580;
+      padding: 20px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      font-family: 'Arial', sans-serif;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .score-display {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+
+    .question-container {
+      background: #f5deb3;
+      padding: 25px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      border: 3px solid rgb(71, 21, 21);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    }
+
+    .question {
+      font-size: 1.3rem;
+      color: rgb(71, 21, 21);
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+
+    .option-btn {
+      background: rgb(71, 21, 21);
+      color: #ebc580;
       border: none;
-      border-radius: 8px;
-      padding: 10px 20px;
-      font-size: 1rem;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 1.2rem;
       cursor: pointer;
-      transition: 0.3s;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
+      font-weight: bold;
     }
 
-    button:hover {
-      background: rgb(71, 21, 21);3; /* Slightly darker brown */
+    .option-btn:hover {
+      background: #8B4513;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
 
-    /* Result Message */
-    .result {
-      margin-top: 20px;
+    .option-btn.selected {
+      background: #8B4513;
+    }
+
+    .option-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .feedback {
+      text-align: center;
       font-size: 1.5rem;
       font-weight: bold;
-      color: rgb(71, 21, 21);;
+      margin-top: 20px;
+      min-height: 50px;
+      padding: 10px;
+    }
+
+    .correct {
+      color: rgb(71, 21, 21);
+    }
+
+    .incorrect {
+      color: #8B4513;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: #f5deb3;
+      border-radius: 10px;
+      margin: 20px 0;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      background: rgb(71, 21, 21);
+      width: 0%;
+      transition: width 0.5s ease;
+    }
+
+    .score-card {
+      background: #ebc580;
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 90%;
+      width: 400px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1000;
+      display: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      border: 4px solid rgb(71, 21, 21);
+    }
+
+    .score-card h2 {
+      color: rgb(71, 21, 21);
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    .score-card p {
+      font-size: 1.2rem;
+      color: rgb(71, 21, 21);
+      margin-bottom: 20px;
+    }
+
+    .restart-btn {
+      background: rgb(71, 21, 21);
+      color: #ebc580;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .restart-btn:hover {
+      background: #8B4513;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(71, 21, 21, 0.8);
+      display: none;
+      z-index: 999;
+    }
+
+    .personal-message {
+      color: rgb(71, 21, 21);
+      font-size: 1.2rem;
+      text-align: center;
+      margin-bottom: 20px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div id="container">
-    <h1>Who's or Whose Game</h1>
-    <p>Complete the sentences with <strong>who’s</strong> or <strong>whose</strong> </p>
+  <div class="court">
+    <div class="personal-message">
+      Test your grammar with pottery! 🏺
+    </div>
+    
+    <div class="scoreboard">
+      <div class="score-display">SCORE: <span id="score">0</span>/5</div>
+    </div>
 
-    <form id="quiz">
-      <div class="question">
-        <label>______ the potter creating that beautiful vase?</label>
-        <select id="q1">
-          <option value="">Select an answer</option>
-          <option value="who's">Who’s</option>
-          <option value="whose">Whose</option>
-        </select>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <div id="question-container" class="question-container">
+      <div id="question" class="question"></div>
+      <div class="options">
+        <button class="option-btn" data-answer="who's">WHO'S</button>
+        <button class="option-btn" data-answer="whose">WHOSE</button>
       </div>
+    </div>
 
-      <div class="question">
-        <label>______ wheel is this in the corner of the studio?</label>
-        <select id="q2">
-          <option value="">Select an answer</option>
-          <option value="who's">Who’s</option>
-          <option value="whose">Whose</option>
-        </select>
-      </div>
+    <div id="feedback" class="feedback"></div>
+  </div>
 
-      <div class="question">
-        <label>The artist ______ known for making intricate bowls is very skilled.</label>
-        <select id="q3">
-          <option value="">Select an answer</option>
-          <option value="who's">Who’s</option>
-          <option value="whose">Whose</option>
-        </select>
-      </div>
-
-      <div class="question">
-        <label>______ already finished glazing their pottery?</label>
-        <select id="q4">
-          <option value="">Select an answer</option>
-          <option value="who's">Who’s</option>
-          <option value="whose">Whose</option>
-        </select>
-      </div>
-
-      <div class="question">
-        <label>I met the potter ______ tools were handmade from bamboo.</label>
-        <select id="q5">
-          <option value="">Select an answer</option>
-          <option value="who's">Who’s</option>
-          <option value="whose">Whose</option>
-        </select>
-      </div>
-
-      <button type="button" onclick="checkAnswers()">Submit</button>
-    </form>
-
-    <div class="result" id="result"></div>
+  <div class="overlay" id="overlay"></div>
+  <div class="score-card" id="score-card">
+    <h2>Game Complete!</h2>
+    <p id="final-message"></p>
+    <button class="restart-btn" id="restart-btn">Play Again</button>
   </div>
 
   <script>
-    function checkAnswers() {
-      const answers = {
-        q1: "who's",
-        q2: "whose",
-        q3: "who's",
-        q4: "who's",
-        q5: "whose"
-      };
+    const questions = [
+      {
+        text: "______ the potter creating that beautiful vase?",
+        answer: "who's"
+      },
+      {
+        text: "______ wheel is this in the corner of the studio?",
+        answer: "whose"
+      },
+      {
+        text: "The artist ______ known for making intricate bowls is very skilled.",
+        answer: "who's"
+      },
+      {
+        text: "______ presenting their work at the exhibition?",
+        answer: "who's"
+      },
+      {
+        text: "I met the potter ______ tools were handmade from bamboo.",
+        answer: "whose"
+      }
+    ];
 
-      let score = 0;
-      for (let [key, correctAnswer] of Object.entries(answers)) {
-        const userAnswer = document.getElementById(key).value;
-        if (userAnswer === correctAnswer) {
-          score++;
+    let currentQuestion = 0;
+    let score = 0;
+    let buttonsEnabled = true;
+
+    // Get DOM elements
+    const optionButtons = document.querySelectorAll('.option-btn');
+    const questionElement = document.getElementById('question');
+    const feedbackElement = document.getElementById('feedback');
+    const progressElement = document.getElementById('progress');
+    const scoreElement = document.getElementById('score');
+    const overlay = document.getElementById('overlay');
+    const scoreCard = document.getElementById('score-card');
+    const finalMessage = document.getElementById('final-message');
+    const restartBtn = document.getElementById('restart-btn');
+
+    function showQuestion() {
+      const question = questions[currentQuestion];
+      questionElement.textContent = question.text;
+      optionButtons.forEach(btn => {
+        btn.classList.remove('selected');
+        btn.disabled = false;
+      });
+      feedbackElement.textContent = '';
+      feedbackElement.className = 'feedback';
+      progressElement.style.width = `${(currentQuestion / questions.length) * 100}%`;
+      buttonsEnabled = true;
+    }
+
+    function handleAnswer(selectedAnswer) {
+      if (!buttonsEnabled) return;
+      buttonsEnabled = false;
+
+      const question = questions[currentQuestion];
+      const correct = selectedAnswer === question.answer;
+      
+      optionButtons.forEach(btn => {
+        btn.disabled = true;
+        if (btn.dataset.answer === selectedAnswer) {
+          btn.classList.add('selected');
         }
+      });
+
+      if (correct) {
+        score++;
+        feedbackElement.textContent = "🏺 Perfect! Like a master potter!";
+        feedbackElement.className = "feedback correct";
+      } else {
+        feedbackElement.textContent = `Not quite! The correct answer was "${question.answer.toUpperCase()}"`;
+        feedbackElement.className = "feedback incorrect";
       }
 
-      const result = document.getElementById("result");
-      result.textContent = `You scored ${score} out of 5!`;
+      scoreElement.textContent = score;
+
+      setTimeout(() => {
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          showQuestion();
+        } else {
+          endGame();
+        }
+      }, 1500);
     }
+
+    function endGame() {
+      let message;
+      if (score === questions.length) {
+        message = "🏺 Masterpiece! Perfect score like a true artisan!";
+      } else if (score >= questions.length * 0.7) {
+        message = "🎨 Great work! Your skills are developing nicely!";
+      } else {
+        message = "Keep practicing! Every master potter started as a beginner!";
+      }
+
+      finalMessage.textContent = `Final Score: ${score}/${questions.length}\n${message}`;
+      overlay.style.display = 'block';
+      scoreCard.style.display = 'block';
+    }
+
+    function startGame() {
+      currentQuestion = 0;
+      score = 0;
+      scoreElement.textContent = '0';
+      overlay.style.display = 'none';
+      scoreCard.style.display = 'none';
+      showQuestion();
+    }
+
+    // Event Listeners
+    optionButtons.forEach(button => {
+      button.addEventListener('click', () => handleAnswer(button.dataset.answer));
+    });
+
+    restartBtn.addEventListener('click', startGame);
+
+    // Start the game
+    startGame();
   </script>
 </body>
 </html>
